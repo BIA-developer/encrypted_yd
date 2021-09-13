@@ -37,6 +37,16 @@ class ConnectorInterface(ABC):
         pass
 
     @abstractmethod
+    def remove(self, remote_path: str, permanently: bool) -> None:
+        """
+        Метод для удаления файла/директории на YD.
+
+        Параметр permanently указывает, удалять ли файл/директорию безвозвратно (True) или нет
+        (помещать в корзину - False).
+        """
+        pass
+
+    @abstractmethod
     def patch(self, remote_path: str, properties: Dict) -> Optional[Dict]:
         """
         Метод для получения или задания свойств файла или директории c/на YD в специальной структуре.
@@ -72,6 +82,9 @@ class ConnectorYaDisk(ConnectorInterface):
 
     def download(self, remote_path: str, local_path: str) -> None:
         self._yd.download(remote_path, local_path)
+
+    def remove(self, remote_path: str, permanently: bool) -> None:
+        self._yd.remove(remote_path, permanently=permanently)
 
     def patch(self, remote_path: str, properties: Dict) -> Optional[Dict]:
         return self._yd.patch(remote_path, properties=properties)

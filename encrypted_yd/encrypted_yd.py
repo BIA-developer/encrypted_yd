@@ -302,3 +302,6 @@ class EncryptedYandexDisk:
             # Сохраняем полученный результат в файл с его исходным именем
             with open(os.path.join(local_dir_path, obj_name), mode='wb') as f:
                 f.write(data)
+
+    def remove(self, remote_path: str, permanently: bool = True) -> None:
+        self._yd.remove(remote_path, permanently)
